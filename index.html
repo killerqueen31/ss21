@@ -6,9 +6,9 @@
     <title>Dostlar Meclisi</title>
     <style>
         body {
-            background-color: #1a1a1a; /* Koyu renk arka plan */
-            color: #f1f1f1; /* Açık renk yazılar */
-            font-family: 'Impact', sans-serif; /* İkonik, sert font */
+            background-color: #1a1a1a;
+            color: #f1f1f1;
+            font-family: 'Impact', sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
@@ -23,9 +23,9 @@
 
         .container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
             padding: 20px;
         }
 
@@ -49,8 +49,13 @@
         .image-box p {
             font-size: 18px;
             margin-top: 10px;
-            font-family: 'Arial', sans-serif; /* Daha okunaklı güzel bir font */
+            font-family: 'Arial', sans-serif;
             color: #ccc;
+        }
+
+        #disqus_thread {
+            margin: 60px auto;
+            max-width: 800px;
         }
     </style>
 </head>
@@ -59,71 +64,86 @@
     <h1>Dostlar Meclisi</h1>
 
     <div class="container">
-        <!-- 8 Görsel Kutusu -->
         <div class="image-box">
             <a href="https://www.youtube.com/watch?v=x2nmPQ94Jrg">
-                <img src="WhatsApp Image 2025-04-18 at 00.37.04.jpeg" alt="Buraya istediğiniz açıklamayı ekleyiniz">
+                <img src="WhatsApp Image 2025-04-18 at 00.37.04.jpeg" alt="Sadrazam">
             </a>
-            <p style="font-size: 20px; font-family: 'Impact', sans-serif; color: #f1f1f1;">Kod Adı: Sadrazam</p>
-            <p style="font-size: 16px; font-family: 'Arial', sans-serif; color: #ccc;">Ağır abi, sözleri çok ama etkili, saygı duyulan biri.</p>
+            <p style="font-size: 20px;">Kod Adı: Sadrazam</p>
+            <p>Ağır abi, sözleri çok ama etkili, saygı duyulan biri.</p>
         </div>
 
         <div class="image-box">
             <a href="https://www.youtube.com/watch?v=WHOh7rxq3Eo">
-                <img src="WhatsApp Image 2025-04-18 at 00.34.35 (2).jpeg" alt="Buraya istediğiniz açıklamayı ekleyiniz">
+                <img src="WhatsApp Image 2025-04-18 at 00.34.35 (2).jpeg" alt="Derviş">
             </a>
-            <p style="font-size: 20px; font-family: 'Impact', sans-serif; color: #f1f1f1;">Kod Adı: Derviş</p>
-            <p style="font-size: 16px; font-family: 'Arial', sans-serif; color: #ccc;">Dünya umurunda değil, içine dönük ve derin düşünceli.</p>
+            <p style="font-size: 20px;">Kod Adı: Derviş</p>
+            <p>Dünya umurunda değil, içine dönük ve derin düşünceli.</p>
         </div>
 
         <div class="image-box">
             <a href="https://www.youtube.com/watch?v=ZHxTAmoSmQE">
-                <img src="WhatsApp Image 2025-04-18 at 00.40.43.jpeg" alt="Buraya istediğiniz açıklamayı ekleyiniz">
+                <img src="WhatsApp Image 2025-04-18 at 00.40.43.jpeg" alt="Hoca">
             </a>
-            <p style="font-size: 20px; font-family: 'Impact', sans-serif; color: #f1f1f1;">Kod Adı: Hoca</p>
-            <p style="font-size: 16px; font-family: 'Arial', sans-serif; color: #ccc;">Bilgili, akıllı, perde arkasında akıl veren kişi, grubun rehberi.</p>
+            <p style="font-size: 20px;">Kod Adı: Hoca</p>
+            <p>Bilgili, akıllı, perde arkasında akıl veren kişi, grubun rehberi.</p>
         </div>
 
         <div class="image-box">
             <a href="https://www.youtube.com/watch?v=WBCiQTk5knY">
-                <img src="WhatsApp Image 2025-04-18 at 00.42.56.jpeg" alt="Buraya istediğiniz açıklamayı ekleyiniz">
+                <img src="WhatsApp Image 2025-04-18 at 00.42.56.jpeg" alt="Fırtına">
             </a>
-            <p style="font-size: 20px; font-family: 'Impact', sans-serif; color: #f1f1f1;">Kod Adı: Fırtına</p>
-            <p style="font-size: 16px; font-family: 'Arial', sans-serif; color: #ccc;">Hızlı, enerjik, ortalığı karıştırıp yok olan tarzda biri.</p>
+            <p style="font-size: 20px;">Kod Adı: Fırtına</p>
+            <p>Hızlı, enerjik, ortalığı karıştırıp yok olan tarzda biri.</p>
         </div>
 
         <div class="image-box">
             <a href="https://www.youtube.com/watch?v=ZtG3eMZL8x8">
-                <img src="WhatsApp Image 2025-04-18 at 00.34.35 (1).jpeg" alt="Buraya istediğiniz açıklamayı ekleyiniz">
+                <img src="WhatsApp Image 2025-04-18 at 00.34.35 (1).jpeg" alt="Yürek">
             </a>
-            <p style="font-size: 20px; font-family: 'Impact', sans-serif; color: #f1f1f1;">Kod Adı: Yürek</p>
-            <p style="font-size: 16px; font-family: 'Arial', sans-serif; color: #ccc;">Gücünü kalbinden alan, sessiz ama derin biri. Herkesin güvendiği adam.</p>
+            <p style="font-size: 20px;">Kod Adı: Yürek</p>
+            <p>Gücünü kalbinden alan, sessiz ama derin biri. Herkesin güvendiği adam.</p>
         </div>
 
         <div class="image-box">
             <a href="https://www.youtube.com/watch?v=NgOro_lq-Xw">
-                <img src="WhatsApp Image 2025-04-18 at 00.37.03.jpeg" alt="Buraya istediğiniz açıklamayı ekleyiniz">
+                <img src="WhatsApp Image 2025-04-18 at 00.37.03.jpeg" alt="Çakal">
             </a>
-            <p style="font-size: 20px; font-family: 'Impact', sans-serif; color: #f1f1f1;">Kod Adı: Çakal</p>
-            <p style="font-size: 16px; font-family: 'Arial', sans-serif; color: #ccc;">Kurnaz, strateji ustası, herkesi iki hamle önceden okur.</p>
+            <p style="font-size: 20px;">Kod Adı: Çakal</p>
+            <p>Kurnaz, strateji ustası, herkesi iki hamle önceden okur.</p>
         </div>
 
         <div class="image-box">
             <a href="https://www.youtube.com/watch?v=TmZNuNPHljA">
-                <img src="WhatsApp Image 2025-04-18 at 00.34.35.jpeg" alt="Buraya istediğiniz açıklamayı ekleyiniz">
+                <img src="WhatsApp Image 2025-04-18 at 00.34.35.jpeg" alt="Beyaz Kartal">
             </a>
-            <p style="font-size: 20px; font-family: 'Impact', sans-serif; color: #f1f1f1;">Kod Adı: Beyaz Kartal</p>
-            <p style="font-size: 16px; font-family: 'Arial', sans-serif; color: #ccc;">Sessiz ama güçlü, gölge gibi iz bırakmadan hareket eder.</p>
+            <p style="font-size: 20px;">Kod Adı: Beyaz Kartal</p>
+            <p>Sessiz ama güçlü, gölge gibi iz bırakmadan hareket eder.</p>
         </div>
 
         <div class="image-box">
             <a href="https://www.youtube.com/watch?v=b0CjyyI-Kqc">
-                <img src="WhatsApp Image 2025-04-18 at 01.53.21.jpeg" alt="Buraya istediğiniz açıklamayı ekleyiniz">
+                <img src="WhatsApp Image 2025-04-18 at 01.53.21.jpeg" alt="Kılıç">
             </a>
-            <p style="font-size: 20px; font-family: 'Impact', sans-serif; color: #f1f1f1;">Kod Adı: Kılıç</p>
-            <p style="font-size: 16px; font-family: 'Arial', sans-serif; color: #ccc;">Doğrudan, sert, adaleti kendi dağıtan bir karakter.</p>
+            <p style="font-size: 20px;">Kod Adı: Kılıç</p>
+            <p>Doğrudan, sert, adaleti kendi dağıtan bir karakter.</p>
         </div>
     </div>
+
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = window.location.href;
+            this.page.identifier = 'dostlar-meclisi';
+        };
+
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://dostlar-meclisi.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Lütfen yorumları görebilmek için JavaScript’i etkinleştiriniz.</noscript>
 
 </body>
 </html>
