@@ -4,21 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dostlar Meclisi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #1a1a1a;
+            background: linear-gradient(135deg, #111, #1e1e1e);
             color: #f1f1f1;
-            font-family: 'Impact', sans-serif;
+            font-family: 'Poppins', sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
         }
 
         h1 {
-            font-size: 50px;
+            font-size: 48px;
             margin: 40px 0;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-transform: uppercase;
+            color: #ffcc70;
         }
 
         .container {
@@ -30,32 +32,53 @@
         }
 
         .image-box {
-            width: 250px;
-            text-align: center;
+            width: 260px;
+            background-color: #2a2a2a;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
         }
 
         .image-box img {
             width: 100%;
             height: auto;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .image-box img:hover {
-            transform: scale(1.1);
+            display: block;
         }
 
         .image-box p {
-            font-size: 18px;
-            margin-top: 10px;
-            font-family: 'Arial', sans-serif;
-            color: #ccc;
+            font-size: 16px;
+            margin: 10px;
+            color: #ddd;
         }
 
-        #disqus_thread {
-            margin: 60px auto;
-            max-width: 800px;
+        .image-box p:first-of-type {
+            font-weight: 600;
+            color: #ffcc70;
+        }
+
+        footer {
+            margin-top: 60px;
+            background-color: #111;
+            padding: 40px 20px;
+            color: #aaa;
+            font-size: 15px;
+        }
+
+        footer h2 {
+            color: #ffcc70;
+            font-size: 24px;
+        }
+
+        footer p {
+            max-width: 600px;
+            margin: 20px auto;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -65,70 +88,78 @@
 
     <div class="container">
         <div class="image-box">
-            <a href="https://youtu.be/VDZ-39lm98A?si=xNsoUYFT9uZMQqYb">
+            <a href="sadrazam.html">
                 <img src="WhatsApp Image 2025-04-18 at 00.37.04.jpeg" alt="Sadrazam">
             </a>
-            <p style="font-size: 20px;">Kod Adı: Sadrazam</p>
+            <p>Kod Adı: Sadrazam</p>
             <p>Ağır abi, sözleri çok ama etkili, saygı duyulan biri.</p>
         </div>
 
         <div class="image-box">
-            <a href="https://youtu.be/sVx1mJDeUjY?si=fQsDkISItz8YBeCh">
+            <a href="dervis.html">
                 <img src="WhatsApp Image 2025-04-18 at 00.34.35 (2).jpeg" alt="Derviş">
             </a>
-            <p style="font-size: 20px;">Kod Adı: Derviş</p>
+            <p>Kod Adı: Derviş</p>
             <p>Dünya umurunda değil, içine dönük ve derin düşünceli.</p>
         </div>
 
         <div class="image-box">
-            <a href="https://www.youtube.com/watch?v=ZHxTAmoSmQE">
+            <a href="hoca.html">
                 <img src="WhatsApp Image 2025-04-18 at 00.40.43.jpeg" alt="Hoca">
             </a>
-            <p style="font-size: 20px;">Kod Adı: Hoca</p>
+            <p>Kod Adı: Hoca</p>
             <p>Bilgili, akıllı, perde arkasında akıl veren kişi, grubun rehberi.</p>
         </div>
 
         <div class="image-box">
-            <a href="https://www.youtube.com/watch?v=WBCiQTk5knY">
+            <a href="firtina.html">
                 <img src="WhatsApp Image 2025-04-18 at 00.42.56.jpeg" alt="Fırtına">
             </a>
-            <p style="font-size: 20px;">Kod Adı: Fırtına</p>
+            <p>Kod Adı: Fırtına</p>
             <p>Hızlı, enerjik, ortalığı karıştırıp yok olan tarzda biri.</p>
         </div>
 
         <div class="image-box">
-            <a href="https://www.youtube.com/watch?v=ZtG3eMZL8x8">
+            <a href="yurek.html">
                 <img src="WhatsApp Image 2025-04-18 at 00.34.35 (1).jpeg" alt="Yürek">
             </a>
-            <p style="font-size: 20px;">Kod Adı: Yürek</p>
+            <p>Kod Adı: Yürek</p>
             <p>Gücünü kalbinden alan, sessiz ama derin biri. Herkesin güvendiği adam.</p>
         </div>
 
         <div class="image-box">
-            <a href="https://www.youtube.com/watch?v=NgOro_lq-Xw">
+            <a href="cakal.html">
                 <img src="WhatsApp Image 2025-04-18 at 00.37.03.jpeg" alt="Çakal">
             </a>
-            <p style="font-size: 20px;">Kod Adı: Çakal</p>
+            <p>Kod Adı: Çakal</p>
             <p>Kurnaz, strateji ustası, herkesi iki hamle önceden okur.</p>
         </div>
 
         <div class="image-box">
-            <a href="https://www.youtube.com/watch?v=TmZNuNPHljA">
+            <a href="kartal.html">
                 <img src="WhatsApp Image 2025-04-18 at 00.34.35.jpeg" alt="Beyaz Kartal">
             </a>
-            <p style="font-size: 20px;">Kod Adı: Beyaz Kartal</p>
+            <p>Kod Adı: Beyaz Kartal</p>
             <p>Sessiz ama güçlü, gölge gibi iz bırakmadan hareket eder.</p>
         </div>
 
         <div class="image-box">
-            <a href="https://www.youtube.com/watch?v=b0CjyyI-Kqc">
+            <a href="kilic.html">
                 <img src="WhatsApp Image 2025-04-18 at 01.53.21.jpeg" alt="Kılıç">
             </a>
-            <p style="font-size: 20px;">Kod Adı: Kılıç</p>
+            <p>Kod Adı: Kılıç</p>
             <p>Doğrudan, sert, adaleti kendi dağıtan bir karakter.</p>
         </div>
     </div>
 
+    <footer>
+        <h2>Hakkımızda</h2>
+        <p>
+            Dostlar Meclisi; geçmişin izlerini taşıyan, dostluğun, sadakatin ve ortak anıların kıymetini bilen bir topluluktur.
+            Her bir karakter kendi hikayesiyle bu yapının bir parçasıdır. Bu site, onların seslerini duyurmak, izlerini yaşatmak için oluşturuldu.
+        </p>
+        <p>© 2025 Dostlar Meclisi. Tüm hakları saklıdır.</p>
+    </footer>
 
 </body>
 </html>
