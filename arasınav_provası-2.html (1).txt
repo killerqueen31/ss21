@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arasınav Provası – Level 1 English</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0e12;
+    --surface: #16161e;
+    --card: #1e1e2a;
+    --border: #2e2e42;
+    --accent: #e8c96b;
+    --accent2: #7eb8d4;
+    --correct: #5dbb8a;
+    --wrong: #e06c75;
+    --text: #ddd8cc;
+    --muted: #888;
+    --radius: 12px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Serif 4', serif;
+    min-height: 100vh;
+    padding: 0 0 60px 0;
+  }
+
+  header {
+    background: linear-gradient(135deg, #0e0e12 0%, #1a1a28 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 24px 20px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  header p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .progress-bar-wrap {
+    margin: 10px auto 0;
+    max-width: 400px;
+    background: var(--border);
+    border-radius: 99px;
+    height: 6px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .score-badge {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: var(--accent2);
+    font-weight: 600;
+  }
+
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--accent2);
+    margin: 32px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title span.tag {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.7rem;
+    background: var(--border);
+    color: var(--muted);
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 400;
+  }
+
+  .question-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+
+  .question-block.answered-correct {
+    border-color: var(--correct);
+    background: #1a2620;
+  }
+
+  .question-block.answered-wrong {
+    border-color: var(--wrong);
+    background: #22191a;
+  }
+
+  .q-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .q-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .q-text em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* Fill-in-blank input */
+  .blank-input {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'Source Serif 4', serif;
+    font-size: 1rem;
+    padding: 6px 12px;
+    width: 160px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .blank-input:focus { border-color: var(--accent); }
+  .blank-input.correct { border-color: var(--correct); background: #1e2e24; }
+  .blank-input.wrong { border-color: var(--wrong); background: #2e1e1e; }
+
+  /* Multiple choice */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+
+  .option-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    cursor: pointer;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    padding: 10px 14px;
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    background: #252535;
+    border-color: var(--accent);
+  }
+
+  .option-btn.correct { background: #1a2e22; border-color: var(--correct); color: #8fe0b0; }
+  .option-btn.wrong   { background: #2e1a1e; border-color: var(--wrong);   color: #e08080; }
+  .option-btn:disabled { cursor: default; }
+
+  /* Check button */
+  .check-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    color: #111;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    margin-top: 10px;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .check-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .check-btn:active { transform: translateY(0); }
+
+  .feedback {
+    margin-top: 10px;
+    font-size: 0.88rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: none;
+  }
+
+  .feedback.show { display: block; }
+  .feedback.ok  { background: #1a2e22; color: #8fe0b0; border-left: 3px solid var(--correct); }
+  .feedback.err { background: #2e1a1e; color: #e08080; border-left: 3px solid var(--wrong); }
+
+  /* Result panel */
+  #result-panel {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 30px 24px;
+    text-align: center;
+    margin-top: 32px;
+  }
+
+  #result-panel h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--accent);
+  }
+
+  #result-panel p { color: var(--muted); margin-top: 8px; font-size: 0.95rem; }
+
+  #result-panel .big-score {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    color: var(--accent);
+    margin: 12px 0 4px;
+  }
+
+  .restart-btn {
+    margin-top: 18px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    color: var(--accent);
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    padding: 10px 26px;
+    transition: background 0.2s;
+  }
+  .restart-btn:hover { background: var(--accent); color: #111; }
+
+  .submit-area {
+    text-align: center;
+    margin-top: 36px;
+  }
+
+  .submit-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 10px;
+    color: #111;
+    cursor: pointer;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 900;
+    padding: 14px 40px;
+    letter-spacing: 0.03em;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .submit-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+
+  @media (max-width: 480px) {
+    .blank-input { width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 Arasınav Provası</h1>
+  <p>Mersin Üniversitesi – Level 1 English Midterm 2 · Files 9–12 + Int. 1–3</p>
+  <div class="progress-bar-wrap"><div class="progress-bar" id="pbar"></div></div>
+  <span class="score-badge" id="score-live">0 / 0 doğru</span>
+</header>
+
+<main id="quiz-main">
+
+  <!-- ====== GRAMMAR ====== -->
+  <div class="section-title">Grammar <span class="tag">File 9</span></div>
+
+  <!-- Q1: for/since -->
+  <div class="question-block" id="q1">
+    <div class="q-label">Soru 1 · For / Since</div>
+    <div class="q-text">I've been a doctor <em>___</em> 2010.</div>
+    <input class="blank-input" id="q1-inp" placeholder="for / since" autocomplete="off">
+    <br><button class="check-btn" onclick="checkBlank('q1','since')">Kontrol Et</button>
+    <div class="feedback" id="q1-fb"></div>
+  </div>
+
+  <div class="question-block" id="q2">
+    <div class="q-label">Soru 2 · For / Since</div>
+    <div class="q-text">Lily and Fred have been married <em>___</em> three years.</div>
+    <input class="blank-input" id="q2-inp" placeholder="for / since" autocomplete="off">
+    <br><button class="check-btn" onclick="checkBlank('q2','for')">Kontrol Et</button>
+    <div class="feedback" id="q2-fb"></div>
+  </div>
+
+  <!-- Q3: present perfect / past simple -->
+  <div class="section-title">Grammar <span class="tag">Present Perfect vs Past Simple</span></div>
+
+  <div class="question-block" id="q3">
+    <div class="q-label">Soru 3</div>
+    <div class="q-text">We <em>___</em> (not see) Micaela since she moved to Valencia.</div>
+    <input class="blank-input" id="q3-inp" placeholder="haven't seen" autocomplete="off" style="width:180px">
+    <br><button class="check-btn" onclick="checkBlank('q3',"haven't seen")">Kontrol Et</button>
+    <div class="feedback" id="q3-fb"></div>
+  </div>
+
+  <div class="question-block" id="q4">
+    <div class="q-label">Soru 4</div>
+    <div class="q-text">Peter and his wife <em>___</em> (buy) a holiday home in Greece last year.</div>
+    <input class="blank-input" id="q4-inp" placeholder="cevap..." autocomplete="off" style="width:180px">
+    <br><button class="check-btn" onclick="checkBlank('q4','bought')">Kontrol Et</button>
+    <div class="feedback" id="q4-fb"></div>
+  </div>
+
+  <div class="question-block" id="q5">
+    <div class="q-label">Soru 5</div>
+    <div class="q-text">My grandmother <em>___</em> (live) in Italy for ten years. She's really happy there.</div>
+    <input class="blank-input" id="q5-inp" placeholder="cevap..." autocomplete="off" style="width:200px">
+    <br><button class="check-btn" onclick="checkBlank('q5','has lived')">Kontrol Et</button>
+    <div class="feedback" id="q5-fb"></div>
+  </div>
+
+  <!-- Q6: 2nd conditional -->
+  <div class="section-title">Grammar <span class="tag">2nd Conditional</span></div>
+
+  <div class="question-block" id="q6">
+    <div class="q-label">Soru 6</div>
+    <div class="q-text">If I <em>___</em> (be) you, I <em>___</em> (stop) smoking.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q6',this,'were / would stop')">were / would stop</button>
+      <button class="option-btn" onclick="checkMC('q6',this,'was / will stop')">was / will stop</button>
+      <button class="option-btn" onclick="checkMC('q6',this,'would be / stopped')">would be / stopped</button>
+    </div>
+    <div class="feedback" id="q6-fb"></div>
+  </div>
+
+  <div class="question-block" id="q7">
+    <div class="q-label">Soru 7</div>
+    <div class="q-text">Kwasi <em>___</em> (not get) lost if he <em>___</em> (use) the satnav in his car.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q7',this,"wouldn't get / used")">wouldn't get / used</button>
+      <button class="option-btn" onclick="checkMC('q7',this,'would get / uses')">would get / uses</button>
+      <button class="option-btn" onclick="checkMC('q7',this,"didn't get / would use")">didn't get / would use</button>
+    </div>
+    <div class="feedback" id="q7-fb"></div>
+  </div>
+
+  <!-- ====== VOCABULARY ====== -->
+  <div class="section-title">Vocabulary <span class="tag">Fears & Phobias</span></div>
+
+  <div class="question-block" id="q8">
+    <div class="q-label">Soru 8</div>
+    <div class="q-text">I saw the spider and started to <em>___</em>. My heart was beating very fast.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q8',this,'panic')">panic</button>
+      <button class="option-btn" onclick="checkMC('q8',this,'fear')">fear</button>
+      <button class="option-btn" onclick="checkMC('q8',this,'freeze')">freeze</button>
+      <button class="option-btn" onclick="checkMC('q8',this,'phobia')">phobia</button>
+    </div>
+    <div class="feedback" id="q8-fb"></div>
+  </div>
+
+  <div class="question-block" id="q9">
+    <div class="q-label">Soru 9</div>
+    <div class="q-text">Carl likes singing, but he sometimes <em>___</em> in front of an audience.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q9',this,'freezes')">freezes</button>
+      <button class="option-btn" onclick="checkMC('q9',this,'panics')">panics</button>
+      <button class="option-btn" onclick="checkMC('q9',this,'suffers')">suffers</button>
+    </div>
+    <div class="feedback" id="q9-fb"></div>
+  </div>
+
+  <!-- Life events -->
+  <div class="section-title">Vocabulary <span class="tag">Life Events</span></div>
+
+  <div class="question-block" id="q10">
+    <div class="q-label">Soru 10</div>
+    <div class="q-text">Boşluğu doğru fiille doldurun: <em>___</em> married</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q10',this,'get')">get</button>
+      <button class="option-btn" onclick="checkMC('q10',this,'have')">have</button>
+      <button class="option-btn" onclick="checkMC('q10',this,'be')">be</button>
+      <button class="option-btn" onclick="checkMC('q10',this,'go')">go</button>
+    </div>
+    <div class="feedback" id="q10-fb"></div>
+  </div>
+
+  <div class="question-block" id="q11">
+    <div class="q-label">Soru 11</div>
+    <div class="q-text"><em>___</em> from work (emekli olmak)</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q11',this,'retire')">retire</button>
+      <button class="option-btn" onclick="checkMC('q11',this,'fall')">fall</button>
+      <button class="option-btn" onclick="checkMC('q11',this,'go')">go</button>
+      <button class="option-btn" onclick="checkMC('q11',this,'get')">get</button>
+    </div>
+    <div class="feedback" id="q11-fb"></div>
+  </div>
+
+  <!-- ====== FILE 10 – PASSIVE / PHRASAL VERBS ====== -->
+  <div class="section-title">Grammar <span class="tag">File 10 · Passive Voice</span></div>
+
+  <div class="question-block" id="q12">
+    <div class="q-label">Soru 12</div>
+    <div class="q-text">My mother decorated the kitchen. → The kitchen <em>___</em> by my mother.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q12',this,'was decorated')">was decorated</button>
+      <button class="option-btn" onclick="checkMC('q12',this,'is decorated')">is decorated</button>
+      <button class="option-btn" onclick="checkMC('q12',this,'has been decorated')">has been decorated</button>
+    </div>
+    <div class="feedback" id="q12-fb"></div>
+  </div>
+
+  <div class="question-block" id="q13">
+    <div class="q-label">Soru 13</div>
+    <div class="q-text">Millions of people speak English. → English <em>___</em> by millions of people.</div>
+    <input class="blank-input" id="q13-inp" placeholder="cevap..." autocomplete="off" style="width:200px">
+    <br><button class="check-btn" onclick="checkBlank('q13','is spoken')">Kontrol Et</button>
+    <div class="feedback" id="q13-fb"></div>
+  </div>
+
+  <div class="question-block" id="q14">
+    <div class="q-label">Soru 14</div>
+    <div class="q-text">Mary Anderson invented windscreen wipers. → Windscreen wipers <em>___</em> by Mary Anderson.</div>
+    <input class="blank-input" id="q14-inp" placeholder="cevap..." autocomplete="off" style="width:200px">
+    <br><button class="check-btn" onclick="checkBlank('q14','were invented')">Kontrol Et</button>
+    <div class="feedback" id="q14-fb"></div>
+  </div>
+
+  <!-- Phrasal verbs -->
+  <div class="section-title">Vocabulary <span class="tag">Phrasal Verbs</span></div>
+
+  <div class="question-block" id="q15">
+    <div class="q-label">Soru 15</div>
+    <div class="q-text">Turn the TV <em>___</em>. It's too loud.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q15',this,'down')">down</button>
+      <button class="option-btn" onclick="checkMC('q15',this,'off')">off</button>
+      <button class="option-btn" onclick="checkMC('q15',this,'up')">up</button>
+      <button class="option-btn" onclick="checkMC('q15',this,'over')">over</button>
+    </div>
+    <div class="feedback" id="q15-fb"></div>
+  </div>
+
+  <div class="question-block" id="q16">
+    <div class="q-label">Soru 16</div>
+    <div class="q-text">If they don't know a word, they can look it <em>___</em> in a dictionary.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q16',this,'up')">up</button>
+      <button class="option-btn" onclick="checkMC('q16',this,'out')">out</button>
+      <button class="option-btn" onclick="checkMC('q16',this,'for')">for</button>
+    </div>
+    <div class="feedback" id="q16-fb"></div>
+  </div>
+
+  <!-- ====== FILE 11 – MIGHT / USED TO ====== -->
+  <div class="section-title">Grammar <span class="tag">File 11 · Might & Used To</span></div>
+
+  <div class="question-block" id="q17">
+    <div class="q-label">Soru 17</div>
+    <div class="q-text">Perhaps it will snow tomorrow. → It <em>___</em> tomorrow.</div>
+    <input class="blank-input" id="q17-inp" placeholder="cevap..." autocomplete="off" style="width:200px">
+    <br><button class="check-btn" onclick="checkBlank('q17','might snow')">Kontrol Et</button>
+    <div class="feedback" id="q17-fb"></div>
+  </div>
+
+  <div class="question-block" id="q18">
+    <div class="q-label">Soru 18</div>
+    <div class="q-text">Becky <em>___</em> work in Tallinn, but now she works in Riga.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q18',this,'used to')">used to</button>
+      <button class="option-btn" onclick="checkMC('q18',this,"didn't use to")">didn't use to</button>
+      <button class="option-btn" onclick="checkMC('q18',this,'was used to')">was used to</button>
+    </div>
+    <div class="feedback" id="q18-fb"></div>
+  </div>
+
+  <div class="question-block" id="q19">
+    <div class="q-label">Soru 19</div>
+    <div class="q-text">I <em>___</em> be slim, but I lost weight. (Eskiden zayıf değildim.)</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q19',this,"didn't use to")">didn't use to</button>
+      <button class="option-btn" onclick="checkMC('q19',this,'used to')">used to</button>
+      <button class="option-btn" onclick="checkMC('q19',this,'might not')">might not</button>
+    </div>
+    <div class="feedback" id="q19-fb"></div>
+  </div>
+
+  <!-- So / Neither -->
+  <div class="question-block" id="q20">
+    <div class="q-label">Soru 20 · So / Neither</div>
+    <div class="q-text">A: I haven't been camping before. B: <em>___</em> have I.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q20',this,'Neither')">Neither</button>
+      <button class="option-btn" onclick="checkMC('q20',this,'So')">So</button>
+      <button class="option-btn" onclick="checkMC('q20',this,'Both')">Both</button>
+    </div>
+    <div class="feedback" id="q20-fb"></div>
+  </div>
+
+  <!-- School subjects -->
+  <div class="section-title">Vocabulary <span class="tag">School Subjects</span></div>
+
+  <div class="question-block" id="q21">
+    <div class="q-label">Soru 21</div>
+    <div class="q-text">Milly enjoyed learning about the past. → Ders: <em>h_______</em></div>
+    <input class="blank-input" id="q21-inp" placeholder="h..." autocomplete="off">
+    <br><button class="check-btn" onclick="checkBlank('q21','history')">Kontrol Et</button>
+    <div class="feedback" id="q21-fb"></div>
+  </div>
+
+  <div class="question-block" id="q22">
+    <div class="q-label">Soru 22</div>
+    <div class="q-text">Caroline loved reading plays and novels. → Ders:</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q22',this,'literature')">literature</button>
+      <button class="option-btn" onclick="checkMC('q22',this,'art')">art</button>
+      <button class="option-btn" onclick="checkMC('q22',this,'geography')">geography</button>
+    </div>
+    <div class="feedback" id="q22-fb"></div>
+  </div>
+
+  <!-- Verb to noun -->
+  <div class="section-title">Vocabulary <span class="tag">Verb → Noun</span></div>
+
+  <div class="question-block" id="q23">
+    <div class="q-label">Soru 23</div>
+    <div class="q-text">Your exam is tomorrow. Are you doing any <em>___</em> (revise)?</div>
+    <input class="blank-input" id="q23-inp" placeholder="cevap..." autocomplete="off" style="width:180px">
+    <br><button class="check-btn" onclick="checkBlank('q23','revision')">Kontrol Et</button>
+    <div class="feedback" id="q23-fb"></div>
+  </div>
+
+  <div class="question-block" id="q24">
+    <div class="q-label">Soru 24</div>
+    <div class="q-text">Amelia had a very interesting <em>___</em> (live).</div>
+    <input class="blank-input" id="q24-inp" placeholder="cevap..." autocomplete="off" style="width:180px">
+    <br><button class="check-btn" onclick="checkBlank('q24','life')">Kontrol Et</button>
+    <div class="feedback" id="q24-fb"></div>
+  </div>
+
+  <!-- ====== FILE 12 ====== -->
+  <div class="section-title">Grammar <span class="tag">File 12 · Past Perfect</span></div>
+
+  <div class="question-block" id="q25">
+    <div class="q-label">Soru 25</div>
+    <div class="q-text">When we arrived, everything was white because it <em>___</em> (snow) earlier in the day.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q25',this,'had snowed')">had snowed</button>
+      <button class="option-btn" onclick="checkMC('q25',this,'snowed')">snowed</button>
+      <button class="option-btn" onclick="checkMC('q25',this,'has snowed')">has snowed</button>
+    </div>
+    <div class="feedback" id="q25-fb"></div>
+  </div>
+
+  <!-- Reported speech -->
+  <div class="section-title">Grammar <span class="tag">Reported Speech</span></div>
+
+  <div class="question-block" id="q26">
+    <div class="q-label">Soru 26</div>
+    <div class="q-text">'The train will be late.' → He said that the train <em>___</em> late.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q26',this,'would be')">would be</button>
+      <button class="option-btn" onclick="checkMC('q26',this,'will be')">will be</button>
+      <button class="option-btn" onclick="checkMC('q26',this,'was')">was</button>
+    </div>
+    <div class="feedback" id="q26-fb"></div>
+  </div>
+
+  <div class="question-block" id="q27">
+    <div class="q-label">Soru 27</div>
+    <div class="q-text">'We've finished our homework.' → They told her that they <em>___</em> their homework.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q27',this,'had finished')">had finished</button>
+      <button class="option-btn" onclick="checkMC('q27',this,'have finished')">have finished</button>
+      <button class="option-btn" onclick="checkMC('q27',this,'finished')">finished</button>
+    </div>
+    <div class="feedback" id="q27-fb"></div>
+  </div>
+
+  <!-- Say / Tell -->
+  <div class="section-title">Vocabulary <span class="tag">Say / Tell</span></div>
+
+  <div class="question-block" id="q28">
+    <div class="q-label">Soru 28</div>
+    <div class="q-text">Can you <em>___</em> me what time the next train leaves?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q28',this,'tell')">tell</button>
+      <button class="option-btn" onclick="checkMC('q28',this,'say')">say</button>
+      <button class="option-btn" onclick="checkMC('q28',this,'speak')">speak</button>
+    </div>
+    <div class="feedback" id="q28-fb"></div>
+  </div>
+
+  <div class="question-block" id="q29">
+    <div class="q-label">Soru 29</div>
+    <div class="q-text">I see Javier every day and he always <em>___</em> hello to me.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q29',this,'says')">says</button>
+      <button class="option-btn" onclick="checkMC('q29',this,'tells')">tells</button>
+      <button class="option-btn" onclick="checkMC('q29',this,'speaks')">speaks</button>
+    </div>
+    <div class="feedback" id="q29-fb"></div>
+  </div>
+
+  <!-- ====== INT. FILE 1 ====== -->
+  <div class="section-title">Grammar <span class="tag">Int. File 1 · Tenses</span></div>
+
+  <div class="question-block" id="q30">
+    <div class="q-label">Soru 30</div>
+    <div class="q-text">Hi, Beth. Sorry, I can't talk right now. I <em>___</em> (drive).</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q30',this,"'m driving")">'m driving</button>
+      <button class="option-btn" onclick="checkMC('q30',this,'drive')">drive</button>
+      <button class="option-btn" onclick="checkMC('q30',this,'drove')">drove</button>
+    </div>
+    <div class="feedback" id="q30-fb"></div>
+  </div>
+
+  <div class="question-block" id="q31">
+    <div class="q-label">Soru 31</div>
+    <div class="q-text">Wow! It <em>___</em> (taste) delicious! Did you make it yourself?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q31',this,'tastes')">tastes</button>
+      <button class="option-btn" onclick="checkMC('q31',this,"'s tasting")">'s tasting</button>
+      <button class="option-btn" onclick="checkMC('q31',this,'tasted')">tasted</button>
+    </div>
+    <div class="feedback" id="q31-fb"></div>
+  </div>
+
+  <!-- Personality adjectives -->
+  <div class="section-title">Vocabulary <span class="tag">Personality Adjectives</span></div>
+
+  <div class="question-block" id="q32">
+    <div class="q-label">Soru 32</div>
+    <div class="q-text">Sergio is so <em>___</em> for his age! He seems much older than 14.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q32',this,'mature')">mature</button>
+      <button class="option-btn" onclick="checkMC('q32',this,'competitive')">competitive</button>
+      <button class="option-btn" onclick="checkMC('q32',this,'sensitive')">sensitive</button>
+    </div>
+    <div class="feedback" id="q32-fb"></div>
+  </div>
+
+  <div class="question-block" id="q33">
+    <div class="q-label">Soru 33</div>
+    <div class="q-text">She's very <em>___</em>. She wants to lead the company and she's working really hard to do it.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q33',this,'ambitious')">ambitious</button>
+      <button class="option-btn" onclick="checkMC('q33',this,'spoilt')">spoilt</button>
+      <button class="option-btn" onclick="checkMC('q33',this,'sociable')">sociable</button>
+    </div>
+    <div class="feedback" id="q33-fb"></div>
+  </div>
+
+  <!-- ====== INT. FILE 2 ====== -->
+  <div class="section-title">Grammar <span class="tag">Int. File 2 · PPS vs PPCONT</span></div>
+
+  <div class="question-block" id="q34">
+    <div class="q-label">Soru 34</div>
+    <div class="q-text">How long <em>___</em> (you / save) for a new bike?</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q34',this,'have you been saving')">have you been saving</button>
+      <button class="option-btn" onclick="checkMC('q34',this,'have you saved')">have you saved</button>
+      <button class="option-btn" onclick="checkMC('q34',this,'did you save')">did you save</button>
+    </div>
+    <div class="feedback" id="q34-fb"></div>
+  </div>
+
+  <div class="question-block" id="q35">
+    <div class="q-label">Soru 35</div>
+    <div class="q-text">She <em>___</em> (know) him for years. (State verb)</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q35',this,"has known")">has known</button>
+      <button class="option-btn" onclick="checkMC('q35',this,'has been knowing')">has been knowing</button>
+      <button class="option-btn" onclick="checkMC('q35',this,'knew')">knew</button>
+    </div>
+    <div class="feedback" id="q35-fb"></div>
+  </div>
+
+  <!-- Money vocabulary -->
+  <div class="section-title">Vocabulary <span class="tag">Money</span></div>
+
+  <div class="question-block" id="q36">
+    <div class="q-label">Soru 36</div>
+    <div class="q-text">Thomas still <em>___</em> me the €100 I lent him last month.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q36',this,'owes')">owes</button>
+      <button class="option-btn" onclick="checkMC('q36',this,'charges')">charges</button>
+      <button class="option-btn" onclick="checkMC('q36',this,'borrows')">borrows</button>
+    </div>
+    <div class="feedback" id="q36-fb"></div>
+  </div>
+
+  <div class="question-block" id="q37">
+    <div class="q-label">Soru 37</div>
+    <div class="q-text">My parents <em>___</em> me some money so I could buy a car.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q37',this,'lent')">lent</button>
+      <button class="option-btn" onclick="checkMC('q37',this,'borrowed')">borrowed</button>
+      <button class="option-btn" onclick="checkMC('q37',this,'owed')">owed</button>
+    </div>
+    <div class="feedback" id="q37-fb"></div>
+  </div>
+
+  <!-- ====== INT. FILE 3 ====== -->
+  <div class="section-title">Grammar <span class="tag">Int. File 3 · Comparatives</span></div>
+
+  <div class="question-block" id="q38">
+    <div class="q-label">Soru 38</div>
+    <div class="q-text">That was probably <em>___</em> (bad) coffee I've ever drunk!</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q38',this,'the worst')">the worst</button>
+      <button class="option-btn" onclick="checkMC('q38',this,'the baddest')">the baddest</button>
+      <button class="option-btn" onclick="checkMC('q38',this,'worse')">worse</button>
+    </div>
+    <div class="feedback" id="q38-fb"></div>
+  </div>
+
+  <div class="question-block" id="q39">
+    <div class="q-label">Soru 39</div>
+    <div class="q-text">Are trains here <em>___</em> (expensive) as in Britain? (same degree)</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q39',this,'as expensive')">as expensive</button>
+      <button class="option-btn" onclick="checkMC('q39',this,'more expensive')">more expensive</button>
+      <button class="option-btn" onclick="checkMC('q39',this,'the most expensive')">the most expensive</button>
+    </div>
+    <div class="feedback" id="q39-fb"></div>
+  </div>
+
+  <!-- Articles -->
+  <div class="section-title">Grammar <span class="tag">Articles – a/an/the/–</span></div>
+
+  <div class="question-block" id="q40">
+    <div class="q-label">Soru 40</div>
+    <div class="q-text">We had time to find <em>___</em> nice little hotel and relax after the journey.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q40',this,'a')">a</button>
+      <button class="option-btn" onclick="checkMC('q40',this,'an')">an</button>
+      <button class="option-btn" onclick="checkMC('q40',this,'the')">the</button>
+      <button class="option-btn" onclick="checkMC('q40',this,'–')">– (no article)</button>
+    </div>
+    <div class="feedback" id="q40-fb"></div>
+  </div>
+
+  <!-- Transport compound nouns -->
+  <div class="section-title">Vocabulary <span class="tag">Transport Compound Nouns</span></div>
+
+  <div class="question-block" id="q41">
+    <div class="q-label">Soru 41</div>
+    <div class="q-text">I never drive during the <em>___</em> hour because the traffic is so bad.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q41',this,'rush')">rush</button>
+      <button class="option-btn" onclick="checkMC('q41',this,'busy')">busy</button>
+      <button class="option-btn" onclick="checkMC('q41',this,'peak')">peak</button>
+    </div>
+    <div class="feedback" id="q41-fb"></div>
+  </div>
+
+  <div class="question-block" id="q42">
+    <div class="q-label">Soru 42</div>
+    <div class="q-text">Adjective + preposition: I'm fed up <em>___</em> my job. I need a change.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q42',this,'with')">with</button>
+      <button class="option-btn" onclick="checkMC('q42',this,'of')">of</button>
+      <button class="option-btn" onclick="checkMC('q42',this,'about')">about</button>
+    </div>
+    <div class="feedback" id="q42-fb"></div>
+  </div>
+
+  <!-- Final phrasal verbs -->
+  <div class="question-block" id="q43">
+    <div class="q-label">Soru 43</div>
+    <div class="q-text">My satnav wasn't working and I ended <em>___</em> in the wrong part of town.</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q43',this,'up')">up</button>
+      <button class="option-btn" onclick="checkMC('q43',this,'out')">out</button>
+      <button class="option-btn" onclick="checkMC('q43',this,'off')">off</button>
+    </div>
+    <div class="feedback" id="q43-fb"></div>
+  </div>
+
+  <!-- Intensifiers / synonyms -->
+  <div class="section-title">Vocabulary <span class="tag">Extreme Adjectives</span></div>
+
+  <div class="question-block" id="q44">
+    <div class="q-label">Soru 44</div>
+    <div class="q-text">'Very funny' için daha güçlü eş anlamlısı:</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q44',this,'hilarious')">hilarious</button>
+      <button class="option-btn" onclick="checkMC('q44',this,'fascinating')">fascinating</button>
+      <button class="option-btn" onclick="checkMC('q44',this,'terrified')">terrified</button>
+    </div>
+    <div class="feedback" id="q44-fb"></div>
+  </div>
+
+  <div class="question-block" id="q45">
+    <div class="q-label">Soru 45</div>
+    <div class="q-text">'Very hungry' için daha güçlü eş anlamlısı:</div>
+    <div class="options">
+      <button class="option-btn" onclick="checkMC('q45',this,'starving')">starving</button>
+      <button class="option-btn" onclick="checkMC('q45',this,'freezing')">freezing</button>
+      <button class="option-btn" onclick="checkMC('q45',this,'furious')">furious</button>
+    </div>
+    <div class="feedback" id="q45-fb"></div>
+  </div>
+
+  <div class="submit-area">
+    <button class="submit-btn" onclick="submitAll()">Sonuçları Gör →</button>
+  </div>
+
+  <div id="result-panel">
+    <h2>🎓 Sınav Tamamlandı!</h2>
+    <div class="big-score" id="final-score">0/45</div>
+    <p id="result-msg"></p>
+    <button class="restart-btn" onclick="restartQuiz()">Tekrar Başla</button>
+  </div>
+
+</main>
+
+<script>
+  const total = 45;
+  let correct = 0;
+  let answered = 0;
+
+  function updateProgress() {
+    const pct = (answered / total) * 100;
+    document.getElementById('pbar').style.width = pct + '%';
+    document.getElementById('score-live').textContent = correct + ' / ' + answered + ' doğru';
+  }
+
+  function normalize(s) {
+    return s.trim().toLowerCase().replace(/['']/g, "'");
+  }
+
+  function checkBlank(id, answer) {
+    const inp = document.getElementById(id + '-inp');
+    const fb  = document.getElementById(id + '-fb');
+    const block = document.getElementById(id);
+    if (inp.disabled) return;
+
+    const userVal = normalize(inp.value);
+    const correctAns = normalize(answer);
+
+    inp.disabled = true;
+    answered++;
+
+    if (userVal === correctAns) {
+      inp.classList.add('correct');
+      fb.textContent = '✓ Doğru!';
+      fb.className = 'feedback show ok';
+      block.classList.add('answered-correct');
+      correct++;
+    } else {
+      inp.classList.add('wrong');
+      fb.textContent = '✗ Yanlış. Doğru cevap: ' + answer;
+      fb.className = 'feedback show err';
+      block.classList.add('answered-wrong');
+    }
+    updateProgress();
+  }
+
+  function checkMC(id, btn, answer) {
+    const fb = document.getElementById(id + '-fb');
+    const block = document.getElementById(id);
+    const allBtns = block.querySelectorAll('.option-btn');
+
+    if (btn.disabled) return;
+    allBtns.forEach(b => b.disabled = true);
+    answered++;
+
+    const userVal = normalize(btn.textContent);
+    const correctAns = normalize(answer);
+
+    if (userVal === correctAns) {
+      btn.classList.add('correct');
+      fb.textContent = '✓ Doğru!';
+      fb.className = 'feedback show ok';
+      block.classList.add('answered-correct');
+      correct++;
+    } else {
+      btn.classList.add('wrong');
+      // highlight correct
+      allBtns.forEach(b => {
+        if (normalize(b.textContent) === correctAns) b.classList.add('correct');
+      });
+      fb.textContent = '✗ Yanlış. Doğru cevap: ' + answer;
+      fb.className = 'feedback show err';
+      block.classList.add('answered-wrong');
+    }
+    updateProgress();
+  }
+
+  function submitAll() {
+    const panel = document.getElementById('result-panel');
+    const scoreEl = document.getElementById('final-score');
+    const msgEl = document.getElementById('result-msg');
+
+    scoreEl.textContent = correct + ' / ' + total;
+
+    const pct = Math.round((correct / total) * 100);
+    let msg = '';
+    if (pct >= 85) msg = '🌟 Harika! Sınavda çok iyi bir not alacaksın.';
+    else if (pct >= 65) msg = '👍 İyi gidiyorsun! Biraz daha pratik yapman yeterli.';
+    else if (pct >= 45) msg = '📖 Orta düzeyde. Gramer konularını tekrar gözden geçir.';
+    else msg = '💪 Daha fazla çalışman gerekiyor. Dosyaları baştan gözden geçir!';
+
+    msgEl.textContent = msg + ' (Başarı: %' + pct + ')';
+    panel.style.display = 'block';
+    panel.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function restartQuiz() {
+    location.reload();
+  }
+</script>
+</body>
+</html>
